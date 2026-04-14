@@ -15,6 +15,7 @@ GameObject:
   - component: {fileID: 8902285141564403250}
   - component: {fileID: 8873739180005340548}
   - component: {fileID: 4948495050553916958}
+  - component: {fileID: 6232068725138360017}
   m_Layer: 0
   m_Name: PowerUp
   m_TagString: Untagged
@@ -506,4 +507,23 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e171010dbabcd964ea2d1b74ac2bead0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  PickableType: 1
+  _pickableType: 0
+--- !u!114 &6232068725138360017
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 114085791977211517}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1e3fdca004f2d45fe8abbed571a8abd5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_OverrideArea: 0
+  m_Area: 0
+  m_OverrideGenerateLinks: 0
+  m_GenerateLinks: 0
+  m_IgnoreFromBuild: 1
+  m_ApplyToChildren: 1
+  m_AffectedAgents: ffffffff
