@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 
 public class Player : MonoBehaviour
@@ -8,11 +9,14 @@ public class Player : MonoBehaviour
     private Rigidbody _rigidBody;
     [SerializeField] private float _speed;
     [SerializeField] private Transform _camera;
-    [SerializeField] private Player _player;
     [SerializeField] private float _powerupDuration;
     private Coroutine _powerupCoroutine;
     public Action OnPowerUpStart;
     public Action OnPowerUpStop;
+    private bool _isPowerUpActive;
+    [SerializeField] private Transform _respawnPoint;
+    [SerializeField] private int _health;
+    [SerializeField] private TMP_Text _healthText;
 
     private void Awake()
     {
@@ -23,6 +27,8 @@ public class Player : MonoBehaviour
     {
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
+        _isPowerUpActive = false;
+        UpdateUI();
     }
 
 
@@ -49,12 +55,15 @@ public class Player : MonoBehaviour
 
     private IEnumerator StartPowerUp()
     {
+        _isPowerUpActive = true;
+
         if (OnPowerUpStart != null)
         {
             OnPowerUpStart();
         }
 
         yield return new WaitForSeconds(_powerupDuration);
+        _isPowerUpActive = false;
 
         if (OnPowerUpStop != null)
         {
@@ -62,4 +71,37 @@ public class Player : MonoBehaviour
         }
     }
 
+    private void OnCollisionEnter(Collision collision)
+    {
+        if (_isPowerUpActive)
+        {
+            if (collision.gameObject.CompareTag("Enemy"))
+            {
+                collision.gameObject.GetComponent<Enemy>().Dead();
+            }
+        }
+    }
+
+    private void UpdateUI()
+    {
+        _healthText.text = "Health: " + _health;
+    }
+
+    public void Dead()
+    {
+        _health -= 1;
+        UpdateUI();
+
+        if (_health > 0)
+        {
+            transform.position = _respawnPoint.position;
+        }
+        else
+        {
+            _health = 0;
+            Debug.Log("Lose");
+        }
+
+        UpdateUI();
+    }
 }
